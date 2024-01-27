@@ -3,6 +3,7 @@ package rest
 import (
 	"interview-test/car-rental/config"
 	"interview-test/car-rental/pkg/services"
+	"net/http"
 	"sync"
 
 	"github.com/labstack/echo/v4"
@@ -11,6 +12,11 @@ import (
 
 func InitRouter(cfg config.AppConfig) *echo.Echo {
 	e := echo.New()
+
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000"},
+		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
+	}))
 
 	e.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
 		// Check if the provided username and password are valid

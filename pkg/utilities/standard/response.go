@@ -1,8 +1,8 @@
 package standard
 
 type StandardReponse struct {
-	Code         int
-	Message      string
+	Code         int     `json:"code"`
+	Message      string  `json:"message"`
 	ErrorMessage *string `json:"ErrorMessage,omitempty"`
 }
 

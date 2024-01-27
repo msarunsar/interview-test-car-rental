@@ -53,7 +53,7 @@ func (cr CarRental) UpdateCar(car models.Car) ([]models.Car, error) {
 	}
 
 	checkName := findIndexByName(carList, car.Name)
-	if checkName != -1 {
+	if checkName != -1 && carList[checkName].Id != car.Id {
 		return nil, fmt.Errorf("Duplicate car name")
 	}
 

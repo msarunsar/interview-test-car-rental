@@ -25,7 +25,7 @@ func (tm CarRentalHandler) CreateCar(c echo.Context) error {
 	}
 	carList, err := tm.carRentalSrv.CreateCar(bodyRequest)
 	if err != nil {
-		return c.JSONPretty(http.StatusNotFound, standard.BadRequest(err.Error()), "")
+		return c.JSONPretty(http.StatusBadRequest, standard.BadRequest(err.Error()), "")
 	}
 	return c.JSONPretty(http.StatusCreated, models.CarResponse{
 		StandardReponse: standard.CreateOrUpdateSucccess(),
@@ -40,7 +40,7 @@ func (tm CarRentalHandler) UpdateCar(c echo.Context) error {
 	}
 	carList, err := tm.carRentalSrv.UpdateCar(bodyRequest)
 	if err != nil {
-		return c.JSONPretty(http.StatusNotFound, standard.BadRequest(err.Error()), "")
+		return c.JSONPretty(http.StatusBadRequest, standard.BadRequest(err.Error()), "")
 	}
 	return c.JSONPretty(http.StatusCreated, models.CarResponse{
 		StandardReponse: standard.CreateOrUpdateSucccess(),
@@ -58,7 +58,7 @@ func (tm CarRentalHandler) DeleteCar(c echo.Context) error {
 	if err != nil {
 		return c.JSONPretty(http.StatusNotFound, standard.NotFound(err.Error()), "")
 	}
-	return c.JSONPretty(http.StatusCreated, models.CarResponse{
+	return c.JSONPretty(http.StatusOK, models.CarResponse{
 		StandardReponse: standard.OkStatus(),
 		Data:            carList,
 	}, "")
@@ -67,7 +67,7 @@ func (tm CarRentalHandler) DeleteCar(c echo.Context) error {
 func (tm CarRentalHandler) GetCar(c echo.Context) error {
 	carIDQ := c.QueryParam("car_id")
 	if carIDQ == "" {
-		return c.JSONPretty(http.StatusNotFound, standard.BadRequest("car_id is require"), "")
+		return c.JSONPretty(http.StatusBadRequest, standard.BadRequest("car_id is require"), "")
 	}
 
 	task, err := tm.carRentalSrv.GetCar(carIDQ)
@@ -75,7 +75,7 @@ func (tm CarRentalHandler) GetCar(c echo.Context) error {
 		return c.JSONPretty(http.StatusNotFound, standard.NotFound(err.Error()), "")
 	}
 
-	return c.JSONPretty(http.StatusCreated, models.CarResponse{
+	return c.JSONPretty(http.StatusOK, models.CarResponse{
 		StandardReponse: standard.OkStatus(),
 		Data:            task,
 	}, "")
@@ -84,9 +84,9 @@ func (tm CarRentalHandler) GetCar(c echo.Context) error {
 func (tm CarRentalHandler) GetCarList(c echo.Context) error {
 	carList, err := tm.carRentalSrv.GetCarList()
 	if err != nil {
-		return c.JSONPretty(http.StatusNotFound, standard.InternalServerError(err.Error()), "")
+		return c.JSONPretty(http.StatusInternalServerError, standard.InternalServerError(err.Error()), "")
 	}
-	return c.JSONPretty(http.StatusCreated, models.CarResponse{
+	return c.JSONPretty(http.StatusOK, models.CarResponse{
 		StandardReponse: standard.OkStatus(),
 		Data:            carList,
 	}, "")

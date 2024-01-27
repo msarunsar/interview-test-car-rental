@@ -3,13 +3,13 @@ package models
 import "interview-test/car-rental/pkg/utilities/standard"
 
 type Car struct {
-	Id       string
-	Name     string
-	Price    int
-	Discount int
+	Id       string `json:"id"`
+	Name     string `json:"name"`
+	Price    int    `json:"price"`
+	Discount int    `json:"discount"`
 }
 
 type CarResponse struct {
 	standard.StandardReponse
-	Data interface{}
+	Data interface{} `json:"data"`
 }
